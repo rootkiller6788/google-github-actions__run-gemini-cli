@@ -30,6 +30,10 @@ inputs:
   gcp_workload_identity_provider:
     description: 'The Google Cloud Workload Identity Provider.'
     required: false
+  gcp_audience:
+    description: |-
+      The audience (aud) claim to request in the GitHub OIDC token. Only used when 'gcp_workload_identity_provider' is set. Defaults to the workload identity provider, which is what Google Cloud expects unless the provider itself is configured with a custom audience.
+    required: false
   gcp_token_format:
     description: 'The token format for authentication. Set to "access_token" to generate access tokens (requires service account), or set to empty string for direct WIF. Can be "access_token" or "id_token".'
     required: false
@@ -223,6 +227,7 @@ runs:
         project_id: '${{ inputs.gcp_project_id }}'
         workload_identity_provider: '${{ inputs.gcp_workload_identity_provider }}'
         service_account: '${{ inputs.gcp_service_account }}'
+        audience: '${{ inputs.gcp_audience }}'
         token_format: '${{ inputs.gcp_token_format }}'
         access_token_scopes: '${{ inputs.gcp_access_token_scopes }}'
 
